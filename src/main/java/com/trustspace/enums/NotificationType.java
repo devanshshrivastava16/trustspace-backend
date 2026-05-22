@@ -1,0 +1,14 @@
+package com.trustspace.enums;
+
+public enum NotificationType {
+    NEW_BOOKING,
+    BOOKING_APPROVED,
+    BOOKING_REJECTED,
+    BOOKING_CANCELLED,
+    NEW_MESSAGE,
+    NEW_REVIEW,
+    PROPERTY_APPROVED,
+    PROPERTY_REJECTED,
+    PAYMENT_SUCCESS,
+    PAYMENT_FAILED
+}
