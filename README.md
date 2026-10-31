@@ -1,83 +1,86 @@
 # TrustSpace Backend
 
-A production-ready Spring Boot backend for TrustSpace - a city-based property rental marketplace platform.
+Production-ready Spring Boot API for a city-based property rental marketplace.
 
-## 🚀 Tech Stack
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen)
+![Java](https://img.shields.io/badge/Java-17-orange)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-blue)
+![License](https://img.shields.io/badge/License-MIT-purple)
 
-- **Framework**: Spring Boot 3.2.0
-- **Language**: Java 17
-- **Database**: PostgreSQL
-- **Security**: Spring Security + JWT
-- **ORM**: Hibernate (JPA)
-- **API**: RESTful
-- **Real-time**: WebSocket
-- **Cloud Storage**: Cloudinary
-- **Build Tool**: Maven
-- **Mapping**: MapStruct
-- **Documentation**: Lombok
+---
 
-## 📋 Prerequisites
+## Tech stack
 
-- JDK 17 or higher
+| Layer | Technology |
+|---|---|
+| Framework | Spring Boot 3.2.0 |
+| Language | Java 17 |
+| Database | PostgreSQL 12+ |
+| Auth | Spring Security + JWT |
+| ORM | Hibernate (JPA) |
+| Real-time | WebSocket / STOMP |
+| Storage | Cloudinary |
+| Build | Maven + MapStruct + Lombok |
+
+---
+
+## Prerequisites
+
+- JDK 17+
 - Maven 3.6+
 - PostgreSQL 12+
 - Cloudinary account
 - Gmail account (for email notifications)
 
-## 🛠️ Installation & Setup
+---
 
-### 1. Clone the Repository
+## Quick start
+
+### 1. Clone the repository
 
 ```bash
 git clone <repository-url>
 cd trustspace-backend
 ```
 
-### 2. Database Setup
-
-Create a PostgreSQL database:
+### 2. Create the database
 
 ```sql
 CREATE DATABASE trustspace_db;
 ```
 
-### 3. Environment Configuration
-
-Copy `.env.example` to `.env` and configure:
+### 3. Configure environment
 
 ```bash
 cp .env.example .env
 ```
 
-Update the following in `.env`:
+Update `.env` with your values:
 
-```properties
-DB_USERNAME=your_postgres_username
-DB_PASSWORD=your_postgres_password
-JWT_SECRET=your_256_bit_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-MAIL_USERNAME=your_gmail@gmail.com
-MAIL_PASSWORD=your_gmail_app_password
-FRONTEND_URL=http://localhost:5173
-```
+| Variable | Description |
+|---|---|
+| `DB_USERNAME` | PostgreSQL username |
+| `DB_PASSWORD` | PostgreSQL password |
+| `JWT_SECRET` | 256-bit secret key |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+| `MAIL_USERNAME` | Gmail address for notifications |
+| `MAIL_PASSWORD` | Gmail app password |
+| `FRONTEND_URL` | CORS origin (e.g. `http://localhost:5173`) |
 
-### 4. Build the Project
+### 4. Build and run
 
 ```bash
 ./mvnw clean install
-```
-
-### 5. Run the Application
-
-```bash
 ./mvnw spring-boot:run
 ```
 
-The application will start on `http://localhost:8080`
+App starts at `http://localhost:8080`.
 
-## 📁 Project Structure
+---
+
+## Project structure
 
 ```
 trustspace-backend/
@@ -86,7 +89,7 @@ trustspace-backend/
 │   │   ├── java/com/trustspace/
 │   │   │   ├── config/           # Configuration classes
 │   │   │   ├── controller/       # REST controllers
-│   │   │   ├── dto/              # Data Transfer Objects
+│   │   │   ├── dto/
 │   │   │   │   ├── request/      # Request DTOs
 │   │   │   │   └── response/     # Response DTOs
 │   │   │   ├── entity/           # JPA entities
@@ -99,135 +102,158 @@ trustspace-backend/
 │   │   │   ├── util/             # Utility classes
 │   │   │   └── TrustSpaceApplication.java
 │   │   └── resources/
-│   │       └── application.yml   # Application configuration
-│   └── test/                     # Test files
-├── .env.example                  # Environment variables template
-├── .gitignore
-├── pom.xml                       # Maven configuration
+│   │       └── application.yml
+│   └── test/
+├── .env.example
+├── pom.xml
 └── README.md
 ```
 
-## 🔑 API Endpoints
+---
+
+## API reference
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-- `POST /api/auth/refresh-token` - Refresh access token
-- `GET /api/auth/verify-email` - Verify email
-- `POST /api/auth/forgot-password` - Request password reset
-- `POST /api/auth/reset-password` - Reset password
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/auth/register` | Register new user |
+| `POST` | `/api/auth/login` | User login |
+| `POST` | `/api/auth/refresh-token` | Refresh access token |
+| `GET` | `/api/auth/verify-email` | Verify email address |
+| `POST` | `/api/auth/forgot-password` | Request password reset |
+| `POST` | `/api/auth/reset-password` | Reset password |
 
 ### Users
-- `GET /api/users/me` - Get current user
-- `GET /api/users/{userId}` - Get user by ID
-- `PUT /api/users/profile` - Update profile
-- `POST /api/users/profile/image` - Upload profile image
-- `PUT /api/users/change-password` - Change password
-- `DELETE /api/users/account` - Delete account
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/users/me` | Get current user |
+| `GET` | `/api/users/{userId}` | Get user by ID |
+| `PUT` | `/api/users/profile` | Update profile |
+| `POST` | `/api/users/profile/image` | Upload profile image |
+| `PUT` | `/api/users/change-password` | Change password |
+| `DELETE` | `/api/users/account` | Delete account |
 
 ### Properties
-- `POST /api/properties` - Create property
-- `GET /api/properties/public/{propertyId}` - Get property by ID
-- `GET /api/properties/public/city/{cityId}` - Get properties by city
-- `PUT /api/properties/{propertyId}` - Update property
-- `DELETE /api/properties/{propertyId}` - Delete property
-- `POST /api/properties/{propertyId}/images` - Upload images
-- `GET /api/properties/my-properties` - Get owner's properties
-- `GET /api/properties/public/search` - Search properties
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/properties` | Create property |
+| `GET` | `/api/properties/public/{propertyId}` | Get property by ID |
+| `GET` | `/api/properties/public/city/{cityId}` | Get properties by city |
+| `GET` | `/api/properties/public/search` | Search properties |
+| `GET` | `/api/properties/my-properties` | Owner's property list |
+| `PUT` | `/api/properties/{propertyId}` | Update property |
+| `POST` | `/api/properties/{propertyId}/images` | Upload property images |
+| `DELETE` | `/api/properties/{propertyId}` | Delete property |
 
 ### Bookings
-- `POST /api/bookings` - Create booking
-- `GET /api/bookings/my-bookings` - Get user's bookings
-- `GET /api/bookings/owner` - Get owner's bookings
-- `GET /api/bookings/{bookingId}` - Get booking details
-- `PUT /api/bookings/{bookingId}/approve` - Approve booking
-- `PUT /api/bookings/{bookingId}/reject` - Reject booking
-- `PUT /api/bookings/{bookingId}/cancel` - Cancel booking
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/bookings` | Create booking |
+| `GET` | `/api/bookings/my-bookings` | Guest's bookings |
+| `GET` | `/api/bookings/owner` | Owner's received bookings |
+| `GET` | `/api/bookings/{bookingId}` | Booking details |
+| `PUT` | `/api/bookings/{bookingId}/approve` | Approve booking |
+| `PUT` | `/api/bookings/{bookingId}/reject` | Reject booking |
+| `PUT` | `/api/bookings/{bookingId}/cancel` | Cancel booking |
 
 ### Reviews
-- `POST /api/reviews` - Create review
-- `GET /api/reviews/property/{propertyId}` - Get property reviews
-- `GET /api/reviews/my-reviews` - Get user's reviews
-- `PUT /api/reviews/{reviewId}` - Update review
-- `DELETE /api/reviews/{reviewId}` - Delete review
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/reviews` | Create review |
+| `GET` | `/api/reviews/property/{propertyId}` | Property reviews |
+| `GET` | `/api/reviews/my-reviews` | My reviews |
+| `PUT` | `/api/reviews/{reviewId}` | Update review |
+| `DELETE` | `/api/reviews/{reviewId}` | Delete review |
 
 ### Wishlist
-- `POST /api/wishlist/{propertyId}` - Add to wishlist
-- `DELETE /api/wishlist/{propertyId}` - Remove from wishlist
-- `GET /api/wishlist` - Get user's wishlist
-- `GET /api/wishlist/{propertyId}/check` - Check if in wishlist
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/wishlist/{propertyId}` | Add to wishlist |
+| `DELETE` | `/api/wishlist/{propertyId}` | Remove from wishlist |
+| `GET` | `/api/wishlist` | My wishlist |
+| `GET` | `/api/wishlist/{propertyId}/check` | Check if saved |
 
 ### Chat
-- `POST /api/chat/messages` - Send message
-- `GET /api/chat/rooms` - Get chat rooms
-- `GET /api/chat/rooms/{chatRoomId}/messages` - Get messages
-- `PUT /api/chat/messages/{messageId}/read` - Mark as read
-- `GET /api/chat/unread-count` - Get unread count
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/chat/messages` | Send message |
+| `GET` | `/api/chat/rooms` | List chat rooms |
+| `GET` | `/api/chat/rooms/{chatRoomId}/messages` | Room messages |
+| `PUT` | `/api/chat/messages/{messageId}/read` | Mark as read |
+| `GET` | `/api/chat/unread-count` | Unread message count |
 
 ### Notifications
-- `GET /api/notifications` - Get notifications
-- `PUT /api/notifications/{notificationId}/read` - Mark as read
-- `PUT /api/notifications/mark-all-read` - Mark all as read
-- `GET /api/notifications/unread-count` - Get unread count
-- `DELETE /api/notifications/{notificationId}` - Delete notification
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/notifications` | All notifications |
+| `PUT` | `/api/notifications/{notificationId}/read` | Mark as read |
+| `PUT` | `/api/notifications/mark-all-read` | Mark all read |
+| `GET` | `/api/notifications/unread-count` | Unread count |
+| `DELETE` | `/api/notifications/{notificationId}` | Delete notification |
 
 ### Cities
-- `GET /api/cities` - Get all cities
-- `GET /api/cities/trending` - Get trending cities
-- `GET /api/cities/{cityId}` - Get city by ID
-- `GET /api/cities/name/{name}` - Get city by name
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/cities` | All cities |
+| `GET` | `/api/cities/trending` | Trending cities |
+| `GET` | `/api/cities/{cityId}` | City by ID |
+| `GET` | `/api/cities/name/{name}` | City by name |
 
 ### Amenities
-- `GET /api/amenities` - Get all amenities
 
-## 🔐 Security
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/amenities` | All amenities |
 
-- JWT-based authentication
-- Role-based authorization (USER, OWNER, ADMIN)
-- Password encryption with BCrypt
-- Email verification
-- Password reset functionality
+---
+
+## WebSocket
+
+Real-time chat over STOMP/WebSocket:
+
+| | |
+|---|---|
+| Endpoint | `ws://localhost:8080/ws` |
+| Broadcast topics | `/topic/`, `/queue/` |
+| Per-user destinations | `/user/` |
+
+---
+
+## Security
+
+- JWT Bearer token authentication
+- Role-based authorization: `USER`, `OWNER`, `ADMIN`
+- BCrypt password hashing
+- Email verification on registration
+- Password reset via email
 - CORS configuration
-- Rate limiting (to be implemented)
 
-## 💾 Database Schema
+---
 
-The application uses PostgreSQL with the following main entities:
+## Database schema
 
-- **User**: User accounts and authentication
-- **City**: Cities where properties are available
-- **Property**: Property listings
-- **PropertyImage**: Property images
-- **Amenity**: Property amenities
-- **PropertyAmenity**: Property-amenity relationship
-- **Booking**: Property bookings
-- **Review**: Property reviews
-- **Wishlist**: User wishlist
-- **ChatRoom**: Chat rooms between users
-- **Message**: Chat messages
-- **Notification**: User notifications
-- **AvailabilitySlot**: Property availability
+Main entities: `User`, `City`, `Property`, `PropertyImage`, `Amenity`, `PropertyAmenity`, `Booking`, `Review`, `Wishlist`, `ChatRoom`, `Message`, `Notification`, `AvailabilitySlot`.
 
-## 🌐 WebSocket
+---
 
-Real-time chat functionality using STOMP over WebSocket:
+## Email notifications
 
-- Endpoint: `ws://localhost:8080/ws`
-- Topics: `/topic/`, `/queue/`
-- User destinations: `/user/`
+Sent for: email verification, password reset, booking status updates, new messages, and property updates.
 
-## 📧 Email Notifications
+---
 
-Email notifications are sent for:
-- Email verification
-- Password reset
-- Booking updates
-- New messages
-- Property updates
+## Docker
 
-## 🐳 Docker Deployment
-
-### Create Dockerfile
+### Dockerfile
 
 ```dockerfile
 FROM openjdk:17-jdk-slim
@@ -236,7 +262,7 @@ COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-### Create docker-compose.yml
+### docker-compose.yml
 
 ```yaml
 version: '3.8'
@@ -268,55 +294,48 @@ volumes:
   postgres_data:
 ```
 
-### Run with Docker
+### Run
 
 ```bash
-# Build the application
 ./mvnw clean package -DskipTests
-
-# Build and run with Docker Compose
 docker-compose up --build
 ```
 
-## 🧪 Testing
+---
+
+## Testing
 
 ```bash
 ./mvnw test
 ```
 
-## 📝 API Documentation
+---
 
-API documentation will be available at:
-- Swagger UI: `http://localhost:8080/swagger-ui.html` (To be implemented)
-
-## 🚦 Health Check
+## Health check
 
 ```bash
 curl http://localhost:8080/actuator/health
 ```
 
-## 🤝 Contributing
+---
+
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/your-feature`)
 3. Commit your changes
 4. Push to the branch
-5. Create a Pull Request
+5. Open a pull request
 
-## 📄 License
+---
 
-This project is licensed under the MIT License.
+## License
 
-## 👥 Authors
+MIT License — see [LICENSE](LICENSE) for details.
 
-- TrustSpace Team
+---
 
-## 🐛 Issues
+## Support
 
-Report issues at: [GitHub Issues](your-repo-url/issues)
-
-## 📞 Support
-
+For issues, open a ticket on [GitHub Issues](<repository-url>/issues).  
 For support, email: support@trustspace.com
-#   t r u s t s p a c e - b a c k e n d  
- 
