@@ -39,7 +39,7 @@ spring:
             required: true
           
 server:
-  port: 8080
+  port: 5000
   error:
     include-message: always
     include-binding-errors: always
@@ -58,13 +58,13 @@ cloudinary:
   
 # Application Configuration
 app:
-  frontend-url: ${FRONTEND_URL}
-  verification-url: ${FRONTEND_URL}/verify-email
-  reset-password-url: ${FRONTEND_URL}/reset-password
+  frontend-url: "https://trustspace.devanshshrivastava.me"
+  verification-url: "https://trustspace.devanshshrivastava.me/verify-email"
+  reset-password-url: "https://trustspace.devanshshrivastava.me/reset-password"
   
 # Logging
-logging:
-  level:
-    com.trustspace: DEBUG
-    org.springframework.security: DEBUG
-    org.hibernate.SQL: DEBUG
+#logging:
+#  level:
+#    com.trustspace: DEBUG
+#    org.springframework.security: DEBUG
+#    org.hibernate.SQL: DEBUG
