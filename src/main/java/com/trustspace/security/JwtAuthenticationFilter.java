@@ -87,7 +87,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // Clear security context if JWT validation fails
             SecurityContextHolder.clearContext();
 
-            logger.warn("JWT authentication failed: {}", e.getMessage());
+            logger.warn("JWT authentication failed: {}");
         }
 
         // Continue the filter chain
