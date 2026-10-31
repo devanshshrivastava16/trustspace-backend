@@ -7,6 +7,13 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      validation-timeout: 5000
     
   jpa:
     hibernate:
@@ -58,9 +65,9 @@ cloudinary:
   
 # Application Configuration
 app:
-  frontend-url: "https://trustspace.devanshshrivastava.me"
-  verification-url: "https://trustspace.devanshshrivastava.me/verify-email"
-  reset-password-url: "https://trustspace.devanshshrivastava.me/reset-password"
+  frontend-url: "https://trustspace-v1.devanshshrivastava.me"
+  verification-url: "https://trustspace-v1.devanshshrivastava.me/verify-email"
+  reset-password-url: "https://trustspace-v1.devanshshrivastava.me/reset-password"
   
 # Logging
 #logging:
